@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Agenda de Estudos</title>
+</head>
+<body>
+  <header>
+    <h1>📘 Agenda de Estudos</h1>
+  </header>
+
+  <main>
+    <!-- Calendário -->
+    <section>
+      <h2>📅 Calendário</h2>
+      <table id="calendar"></table>
+    </section>
+
+    <!-- Lista de Tarefas -->
+    <section>
+      <h2>✅ Tarefas</h2>
+      <input type="text" id="taskInput" placeholder="Digite uma tarefa...">
+      <button onclick="addTask()">Adicionar</button>
+      <ul id="taskList"></ul>
+    </section>
+
+    <!-- Metas -->
+    <section>
+      <h2>🎯 Metas</h2>
+      <input type="text" id="goalInput" placeholder="Digite uma meta...">
+      <button onclick="addGoal()">Adicionar</button>
+      <ul id="goalList"></ul>
+    </section>
+  </main>
+
+  <script>
+    // ----- Calendário -----
+    function generateCalendar() {
+      const calendar = document.getElementById("calendar");
+      const date = new Date();
+      const month = date.getMonth();
+      const year = date.getFullYear();
+
+      const firstDay = new Date(year, month, 1).getDay();
+      const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+      const monthNames = [
+        "Janeiro","Fevereiro","Março","Abril","Maio","Junho",
+        "Julho","Agosto","Setembro","Outubro","Novembro","Dezembro"
+      ];
+      const weekDays = ["Dom","Seg","Ter","Qua","Qui","Sex","Sáb"];
+
+      let html = `<tr><th colspan="7">${monthNames[month]} ${year}</th></tr>`;
+      html += "<tr>" + weekDays.map(d => `<th>${d}</th>`).join("") + "</tr><tr>";
+
+      let day = 1;
+      for (let i = 0; i < 6; i++) {
+        for (let j = 0; j < 7; j++) {
+          if (i === 0 && j < firstDay) {
+            html += "<td></td>";
+          } else if (day > daysInMonth) {
+            html += "<td></td>";
+          } else {
+            let today = date.getDate();
+            let highlight = (day === today) ? " style='background:#81c784; color:white; font-weight:bold;'" : "";
+            html += `<td${highlight}>${day}</td>`;
+            day++;
+          }
+        }
+        html += "</tr><tr>";
+      }
+
+      calendar.innerHTML = html;
+    }
+    generateCalendar();
+
+    // ----- Tarefas -----
+    function addTask() {
+      const input = document.getElementById("taskInput");
+      const list = document.getElementById("taskList");
+
+      if (input.value.trim() === "") return;
+
+      const li = document.createElement("li");
+      li.innerHTML = `${input.value} <button onclick="this.parentElement.remove()">Remover</button>`;
+      list.appendChild(li);
+
+      input.value = "";
+    }
+
+    // ----- Metas -----
+    function addGoal() {
+      const input = document.getElementById("goalInput");
+      const list = document.getElementById("goalList");
+
+      if (input.value.trim() === "") return;
+
+      const li = document.createElement("li");
+      li.innerHTML = `${input.value} <button onclick="this.parentElement.remove()">Remover</button>`;
+      list.appendChild(li);
+
+      input.value = "";
+    }
+  </script>
+</body>
+</html>
