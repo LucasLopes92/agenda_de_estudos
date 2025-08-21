@@ -20,7 +20,7 @@
 5. Use Portuguese language inside the user views.
 
 ## Commits default Message
-### Type and task + "task Number and type" + commit message with the default rules.
+### Type and task +" - "+ commit message with the default rules.
 
 ## Project types
 1. "build" - Signifies changes related to the build system orexternal dependencies.
